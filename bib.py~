@@ -1,0 +1,42 @@
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import numpy
+
+img=mpimg.imread('final-bib.png')
+
+#plt.ylim(1104,0)
+#plt.xlim(0,1680)
+
+def create(name1,name2,name3,name4,number):
+    plt.imshow(img)
+
+    plt.text(50,380,str(number),color="white",fontsize=75,weight='heavy')
+    plt.text(33,520,str(name1),color='black',fontsize=9.5,weight='bold')
+
+    plt.text(882,380,str(number+1),color="white",fontsize=75,weight='heavy')
+    plt.text(865,520,str(name2),color='black',fontsize=9.5,weight='bold')
+
+    plt.text(50,930,str(number+2),color="white",fontsize=75,weight='heavy')
+    plt.text(33,1065,str(name3),color='black',fontsize=9.5,weight='bold')
+
+    plt.text(882,930,str(number+3),color="white",fontsize=75,weight='heavy')
+    plt.text(865,1065,str(name4),color='black',fontsize=9.5,weight='bold')
+
+    plt.axis('off')
+    plt.tight_layout()
+    plt.savefig("bib"+str(count)+".png",format='png',bbox_inches='tight',dpi=200,pad_inches=0)
+    plt.close()
+    return None
+
+count=2000
+import pandas
+df=pandas.read_csv("data.csv")
+names=df["Name of the participant"]
+
+for i in numpy.arange(0,len(names),4):
+    create(names[i],names[i+1],names[i+2],names[i+3],count)
+    plt.close()
+    count=count+4
+
+import os
+os.system("for a in *.png; do convert -trim "$a" "$a"; done")
